@@ -4,16 +4,21 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
+
+
+use App\Filters\ArticleFilter;
+
 
 class Article extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+    // protected $guarded = [];
+    protected $fillable = ['name', 'topic', 'image', 'tags', 'file_path', 'created_at', 'updated_at'];
 
-    // public const STATUS = [
-    //     'draft' => 0,
-    //     'published' => 1,
-    //     'deleted' => 2,
-    // ];
+    public function scopeFilter(Builder $builder, $request)
+    {
+        return (new ArticleFilter($request))->filter($builder);
+    }
 }

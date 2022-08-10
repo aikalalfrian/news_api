@@ -14,8 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::table('articles', function (Blueprint $table) {
-            $table->enum('status_article', ['active', 'inactive'])->default('active');
-            $table->integer('tags');
+            $table->enum('status_article', ['draft', 'deleted', 'published'])->default('published');
+            $table->string('tags');
             $table->dropColumn('status');
         });
     }

@@ -13,8 +13,8 @@ class ArticleController extends Controller
 {
     public function index()
     {
-        $articles = Article::where('status_article', '=', 'active')->get();
-        return response()->json([ArticleResource::collection($articles), 'Article Fetched Successfully']);
+        $articles = Article::where('status_article', '!=', 'deleted')->get();
+        return response()->json(['data' => ArticleResource::collection($articles)]);
     }
 
     public function store(Request $request)
@@ -23,25 +23,30 @@ class ArticleController extends Controller
             'name' => 'required|string|max:255',
             'tags' => 'required|string|max:255',
             'topic' => 'required|string|max:255',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'image' => 'required',
         ]);
 
         if ($validator->fails()) {
             return response()->json($validator->errors());
         }
 
-        if ($request->hasFile('image')) {
-            foreach ($request->file('image') as $image) {
-                $fileName = $image->getClientOriginalName();
-                $image_encod = base64_encode(file_get_contents($image));
-                $destinationPath = config('app.fileDesinationPath') . '/' . $fileName;
-                $image->move($destinationPath, $fileName);
+        if ($request->hasFile('file')) {
 
-                $data = new Article();
-                $data->image_name = $image_encod;
-                $data->save();
-            }
+            $request->validate([
+                'image' => 'mimes:jpeg,bmp,png' // Only allow .jpg, .bmp and .png file types.
+            ]);
+
+            // Save the file locally in the storage/public/ folder under a new folder named /product
+            $request->file->store('product', 'public');
+
+            // Store the record, using the new file hashname which will be it's new filename identity.
+            $data = new Article([
+                "image" => $request->get('image'),
+                "file_path" => $request->file->hashName()
+            ]);
+            $data->save(); // Finally, save the record.
         }
+
 
         $articles = Article::create([
             'name' => $request->name,
@@ -50,17 +55,18 @@ class ArticleController extends Controller
             'image' => $request->image,
         ]);
 
-        return response()->json(['Article Created Successfully', new ArticleResource($articles)]);
+        return response()->json(['data' => $articles, 'message' => 'Article Created Successfully']);
     }
 
     public function show($id)
     {
-        $articles = Article::where('status_article', '=', 'active')->find($id);
+        $articles = Article::where('status_article', '!=', 'deleted')->find($id);
 
         if (is_null($articles)) {
             return response()->json('Article not found', 404);
         }
-        return response()->json([new ArticleResource($articles)]);
+
+        return response()->json(['data' => new ArticleResource($articles)]);
     }
 
     public function update(Request $request, $id)
@@ -68,28 +74,14 @@ class ArticleController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'tags' => 'required|string|max:255',
-            'topic' => 'required|string|max:255',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'topic' => 'required|string|max:255'
         ]);
 
         if ($validator->fails()) {
             return response()->json($validator->errors());
         }
 
-        if ($request->hasFile('image')) {
-            foreach ($request->file('image') as $image) {
-                $fileName = $image->getClientOriginalName();
-                $image_encod = base64_encode(file_get_contents($image));
-                $destinationPath = config('app.fileDesinationPath') . '/' . $fileName;
-                $image->move($destinationPath, $fileName);
-
-                $data = new Article();
-                $data->image_name = $image_encod;
-                $data->save();
-            }
-        }
-
-        $articles = Article::where('status_article', '=', 'active')->find($id);
+        $articles = Article::where('status_article', '!=', 'deleted')->find($id);
         if (is_null($articles)) {
             return response()->json('Article not found', 404);
         }
@@ -104,8 +96,21 @@ class ArticleController extends Controller
         if (is_null($articles)) {
             return response()->json('Article not found', 404);
         }
-        $articles->status_article = 'inactive';
+        $articles->status_article = 'deleted';
         $articles->save();
-        return response()->json(['Article Deleted Successfully']);
+
+        return response()->json(['data' => 'Article Deleted Successfully']);
+    }
+
+    public function draft($id)
+    {
+        $articles = Article::find($id);
+        if (is_null($articles)) {
+            return response()->json('Article not found', 404);
+        }
+        $articles->status_article = 'draft';
+        $articles->save();
+
+        return response()->json(['data' => 'Article Drafted Successfully']);
     }
 }
