@@ -63,7 +63,7 @@ class ArticleController extends Controller
         $articles = Article::where('status_article', '!=', 'deleted')->find($id);
 
         if (is_null($articles)) {
-            return response()->json('Article not found', 404);
+            return response()->json(['error' => 404, 'message' => 'Article not found'], 404);
         }
 
         return response()->json(['data' => new ArticleResource($articles)]);
@@ -83,7 +83,7 @@ class ArticleController extends Controller
 
         $articles = Article::where('status_article', '!=', 'deleted')->find($id);
         if (is_null($articles)) {
-            return response()->json('Article not found', 404);
+            return response()->json(['error' => 404, 'message' => 'Article not found'], 404);
         }
 
         $articles->update($request->all());
@@ -94,7 +94,7 @@ class ArticleController extends Controller
     {
         $articles = Article::find($id);
         if (is_null($articles)) {
-            return response()->json('Article not found', 404);
+            return response()->json(['error' => 404, 'message' => 'Article not found'], 404);
         }
         $articles->status_article = 'deleted';
         $articles->save();
@@ -106,7 +106,7 @@ class ArticleController extends Controller
     {
         $articles = Article::find($id);
         if (is_null($articles)) {
-            return response()->json('Article not found', 404);
+            return response()->json(['error' => 404, 'message' => 'Article not found'], 404);
         }
         $articles->status_article = 'draft';
         $articles->save();

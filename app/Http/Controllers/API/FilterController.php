@@ -14,10 +14,6 @@ class FilterController extends Controller
     {
         $articles = Article::filter($request)->get();
 
-        if (is_null($articles)) {
-            return response()->json('Article not found', 404);
-        }
-
         return response()->json(['data' => FilterResource::collection($articles)]);
     }
 }
