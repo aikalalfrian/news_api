@@ -23,36 +23,28 @@ class ArticleController extends Controller
             'name' => 'required|string|max:255',
             'tags' => 'required|string|max:255',
             'topic' => 'required|string|max:255',
-            'image' => 'required',
+            'image' => 'required|image:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
         if ($validator->fails()) {
             return response()->json($validator->errors());
         }
 
-        if ($request->hasFile('file')) {
-
-            $request->validate([
-                'image' => 'mimes:jpeg,bmp,png' // Only allow .jpg, .bmp and .png file types.
-            ]);
-
-            // Save the file locally in the storage/public/ folder under a new folder named /product
-            $request->file->store('product', 'public');
-
-            // Store the record, using the new file hashname which will be it's new filename identity.
-            $data = new Article([
-                "image" => $request->get('image'),
-                "file_path" => $request->file->hashName()
-            ]);
-            $data->save(); // Finally, save the record.
+        if (!$request->hasFile('image')) {
+            return response()->json(['upload_file_not_found'], 400);
         }
+        $file = $request->file('image');
 
+        if (!$file->isValid()) {
+            return response()->json(['invalid_file_upload'], 400);
+        }
+        $path = public_path() . '/uploads/images/store/';
 
         $articles = Article::create([
             'name' => $request->name,
             'tags' => $request->tags,
             'topic' => $request->topic,
-            'image' => $request->image,
+            'image' => $path . $file->getClientOriginalName(),
         ]);
 
         return response()->json(['data' => $articles, 'message' => 'Article Created Successfully']);
@@ -74,7 +66,8 @@ class ArticleController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'tags' => 'required|string|max:255',
-            'topic' => 'required|string|max:255'
+            'topic' => 'required|string|max:255',
+            'image' => 'required|image:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
         if ($validator->fails()) {
@@ -86,7 +79,23 @@ class ArticleController extends Controller
             return response()->json(['error' => 404, 'message' => 'Article not found'], 404);
         }
 
-        $articles->update($request->all());
+        if (!$request->hasFile('image')) {
+            return response()->json(['upload_file_not_found'], 400);
+        }
+        $file = $request->file('image');
+
+        if (!$file->isValid()) {
+            return response()->json(['invalid_file_upload'], 400);
+        }
+        $path = public_path() . '/uploads/images/store/';
+
+        $articles->update([
+            'name' => $request->name,
+            'tags' => $request->tags,
+            'topic' => $request->topic,
+            'image' => $path . $file->getClientOriginalName(),
+        ]);
+
         return response()->json(['Article Updated Successfully', new ArticleResource($articles)]);
     }
 

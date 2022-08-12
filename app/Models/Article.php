@@ -14,7 +14,6 @@ class Article extends Model
 {
     use HasFactory;
 
-    // protected $guarded = [];
     protected $fillable = ['name', 'topic', 'image', 'tags', 'file_path', 'created_at', 'updated_at'];
 
     public function scopeFilter(Builder $builder, $request)
