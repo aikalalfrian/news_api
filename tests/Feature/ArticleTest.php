@@ -14,7 +14,6 @@ class ArticleTest extends TestCase
 
     public function user_can_browse_posts_index_page()
     {
-        // generate 2 record baru di table `posts`
         $article1 = Article::create([
             'name' => 'test',
             'tags' => 'test',
