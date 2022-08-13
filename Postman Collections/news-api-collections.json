@@ -1,0 +1,541 @@
+{
+	"info": {
+		"_postman_id": "5def17ee-5bd7-4834-a399-e06234c3de9d",
+		"name": "News Article",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Post Article",
+			"_postman_id": "187f4c0b-4396-4de5-904a-3c24c2527d0c",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "1|QgCpfG4F3fCCrq3UTfEQntWpryG6TZ9DBKXApakZ"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "test 4",
+							"type": "text"
+						},
+						{
+							"key": "tags",
+							"value": "empat",
+							"type": "text"
+						},
+						{
+							"key": "topic",
+							"value": "majalah",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/Users/mekari/Downloads/images.jpeg"
+						}
+					],
+					"options": {
+						"formdata": {}
+					}
+				},
+				"url": "http://127.0.0.1:8000/api/articles"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Article",
+			"_postman_id": "6f6dd014-02b2-4b03-8379-e0b5c7e92ad6",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "1|QgCpfG4F3fCCrq3UTfEQntWpryG6TZ9DBKXApakZ"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "test 2",
+							"type": "text"
+						},
+						{
+							"key": "tags",
+							"value": "dua",
+							"type": "text"
+						},
+						{
+							"key": "topic",
+							"value": "majalah",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/Users/mekari/Downloads/81m1s4wIPML.jpeg"
+						},
+						{
+							"key": "_method",
+							"value": "PUT",
+							"type": "text"
+						}
+					],
+					"options": {
+						"formdata": {}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/articles/:id",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"articles",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "2",
+							"type": "string"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Article",
+			"_postman_id": "9b0a0cf5-8234-4f0c-9dc1-849af444d2bd",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "1|QgCpfG4F3fCCrq3UTfEQntWpryG6TZ9DBKXApakZ"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://127.0.0.1:8000/api/articles"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Article By Id",
+			"_postman_id": "777ae919-4777-4aca-8231-358f203f0d42",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "1|QgCpfG4F3fCCrq3UTfEQntWpryG6TZ9DBKXApakZ"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/articles/:id",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"articles",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "2",
+							"type": "string"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Filter News",
+			"_postman_id": "7db8d200-f912-422a-b016-86f7e1a67c2b",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "1|QgCpfG4F3fCCrq3UTfEQntWpryG6TZ9DBKXApakZ"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/filter?topic=&tags=&status_article=deleted",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"filter"
+					],
+					"query": [
+						{
+							"key": "topic",
+							"value": ""
+						},
+						{
+							"key": "tags",
+							"value": ""
+						},
+						{
+							"key": "status_article",
+							"value": "deleted",
+							"description": "published | draft | deleted"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Articles",
+			"_postman_id": "8a510217-6f7d-4f37-822f-27fae7b371bc",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "1|QgCpfG4F3fCCrq3UTfEQntWpryG6TZ9DBKXApakZ"
+					}
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/articles/:id",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"articles",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "4",
+							"type": "string"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Draft Articles",
+			"_postman_id": "c6d59cfe-05d9-4254-a6ce-24710588c589",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "1|QgCpfG4F3fCCrq3UTfEQntWpryG6TZ9DBKXApakZ"
+					}
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/articles/:id/draft",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"articles",
+						":id",
+						"draft"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "3",
+							"type": "string"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register User",
+			"_postman_id": "b3a0cad4-4925-4a7d-b7d6-3c944bab7a9d",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "aikal",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "aikal@mail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "12345678",
+							"type": "text"
+						}
+					],
+					"options": {
+						"formdata": {}
+					}
+				},
+				"url": "http://127.0.0.1:8000/api/register"
+			},
+			"response": []
+		},
+		{
+			"name": "Login User",
+			"_postman_id": "19c4454d-29b1-4285-a4f1-5dc6859a5486",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "aikal@mail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "12345678",
+							"type": "text"
+						}
+					],
+					"options": {
+						"formdata": {}
+					}
+				},
+				"url": "http://127.0.0.1:8000/api/login"
+			},
+			"response": []
+		},
+		{
+			"name": "Logout User",
+			"_postman_id": "0ddfeb4c-7268-45d6-93ff-c5db63f69fbc",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "2|Z7bMh3yuwWNclSk2Rj8OHAf6k8dpN35f9VGq8ksM"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"url": "http://127.0.0.1:8000/api/logout"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Profile Data",
+			"_postman_id": "0d39d5fe-1357-47be-9fa2-7ef7aea69fe6",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "2|M2IQBjI4Bvd3hbp2Z890KYvdaIk8Nl0MibwTcOCa"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://127.0.0.1:8000/api/profile"
+			},
+			"response": []
+		},
+		{
+			"name": "Register User",
+			"_postman_id": "85518798-de26-4438-8e72-494ddfb70837",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/register?name=aikal&email=aikal@mail.com&password=12345678",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"register"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "aikal",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "aikal@mail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "12345678",
+							"type": "text"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login User",
+			"_postman_id": "3b7cd24a-a43a-430f-8f2b-0bccb702d4d4",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/login?email=aikal@mail.com&password=12345678",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"login"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "aikal@mail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "12345678",
+							"type": "text"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout User",
+			"_postman_id": "31a27db0-32e7-47db-9e8c-aab79217a58b",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": "http://127.0.0.1:8000/api/logout"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Profile User",
+			"_postman_id": "4a950fd9-2245-48c4-95d4-89db15c14969",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "1|QgCpfG4F3fCCrq3UTfEQntWpryG6TZ9DBKXApakZ"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://127.0.0.1:8000/api/profile"
+			},
+			"response": []
+		}
+	]
+}
